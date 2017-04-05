@@ -11,7 +11,6 @@ var bodyParser = require('body-parser');
 const routes = require('./router/index');//require('./router');
 
 //相关配置文件
-// var config = require("../config/config");
 // var pkg = require('../package');
 //实例
 var app = express();
