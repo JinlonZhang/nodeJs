@@ -442,8 +442,8 @@ window.personal = window.personal || {};
             data: params.type == "get" ? params.data : JSON.stringify(params.data || {}),
             success: function (data) {
                 // _this.ui && _this.ui.hideLoading();
-                console.log("success");
                 if (data && data.code == 10000) {
+                    console.log("success");
                     _this.successCallback(params.callback, data);
                 } else {
                     _this.errorCallback(params.callback, data || {

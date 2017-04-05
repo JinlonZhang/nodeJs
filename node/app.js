@@ -5,6 +5,7 @@
 //相关依赖
 var path = require('path');
 var express = require("express");
+var config = require('config-lite');
 var bodyParser = require('body-parser');
 
 const routes = require('./router/index');//require('./router');
@@ -43,7 +44,7 @@ routes(app);
 
 
 // 监听端口，启动程序
-const SERVER = app.listen(3000, function () {
+const SERVER = app.listen(config.port, function () {
     var address = SERVER.address();
     console.log(address);
     console.log(`nodeApp listening on port 3000`);

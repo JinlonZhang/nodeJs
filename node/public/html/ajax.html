@@ -24,7 +24,7 @@
 
     //user ajax
     personal.ajax({
-        url: "http://127.0.0.1:3000/user",
+        url: location.origin + "/user",
         type: "get",
         callback: function (data) {
             console.log(data);
@@ -32,7 +32,7 @@
     })
 
     personal.ajax({
-        url: "http://127.0.0.1:3000/user/about",
+        url: location.origin + "/user/about",
         type: "get",
         callback: function (data) {
             console.log(data);
@@ -40,7 +40,7 @@
     })
 
     personal.ajax({
-        url: "http://127.0.0.1:3000/user/login",
+        url: location.origin + "/user/login",
         type: "post",
         data: {
             type: "post",

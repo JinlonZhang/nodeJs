@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>ajax</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .btn {
+            line-height: 30px;
+            text-align: center;
+            border-bottom: solid 1px #c7c7c7;
+        }
+    </style>
+</head>
+<body>
+<div class="btn query">query</div>
+<div class="btn insert">insert</div>
+</body>
+<script type="text/javascript" src="../common/zepto.js"></script>
+<script type="text/javascript" src="../common/util.js"></script>
+<script type="text/javascript">
+
+    $(".query").click(function (e) {
+        //user ajax
+        personal.ajax({
+            url: location.origin + "/user/infos",
+            type: "post",
+            data: {
+                name: 1104
+            },
+            callback: function (data, code, msg) {
+                console.log(data);
+            }
+        });
+        personal.ajax({
+            url: location.origin + "/user/infos",
+            type: "post",
+            data: {},
+            callback: function (data, code, msg) {
+                console.log(data);
+            }
+        })
+    });
+
+    $(".btns").click(function (e) {
+        personal.ajax({
+            url: location.origin + "/user/about",
+            type: "get",
+            callback: function (data) {
+                console.log(data);
+            }
+        })
+
+        personal.ajax({
+            url: location.origin + "/user/login",
+            type: "post",
+            data: {
+                type: "post",
+                target: "login"
+            },
+            callback: function (data) {
+                console.log(data);
+            }
+        })
+    })
+
+
+</script>
+</html>
