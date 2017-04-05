@@ -22,12 +22,13 @@ router.get('/about', function (req, res) {
 });
 // 定义 login 页面的路由
 router.post('/login', function (req, res) {
-    console.log(req);
+    console.log(req.body);
     res.send('user login');
 });
 
 // 定义 logout 页面的路由
 router.post('/logout', function (req, res) {
+    console.log(req.body);
     res.send('user logout');
 });
 

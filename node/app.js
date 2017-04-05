@@ -31,12 +31,12 @@ app.locals.blog = {
 
 
 // bodyParser ：ajax 请求的配置项
-
-// parse application/x-www-form-urlencoded 
-app.use(bodyParser.urlencoded({extended: false}));
-
-// parse application/json ：接受 json 或者可以转换为json的数据格式
-app.use(bodyParser.json({type: 'application/*+json'}));
+// app.use(bodyParser.json({
+//      type: 'application/*+json',
+//      strict: false
+// })); // for parsing application/json
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({extended: true})); // for parsing application/x-www-form-urlencoded
 
 // 路由
 routes(app);

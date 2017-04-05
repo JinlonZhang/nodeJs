@@ -438,8 +438,8 @@ window.personal = window.personal || {};
             type: params.type || "post",//默认post请求
             url: url,
             dataType: params.dataType || "json",//默认json返回
-            contentType: "application/json",
-            data: params.type ? params.data : JSON.stringify(params.data || {}),
+            contentType: "application/json",//必须给json 或者可以转换成json格式的字符串数据
+            data: params.type == "get" ? params.data : JSON.stringify(params.data || {}),
             success: function (data) {
                 // _this.ui && _this.ui.hideLoading();
                 console.log("success");
