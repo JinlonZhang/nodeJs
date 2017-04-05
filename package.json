@@ -1,0 +1,14 @@
+{
+  "name": "nodeJs",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=6.x"
+  },
+  "dependencies": {
+    "express": "^4.15.2",
+    "body-parser": "^1.17.1"
+  },
+  "devDependencies": {
+    "config-lite": "1.5.0"
+  }
+}
