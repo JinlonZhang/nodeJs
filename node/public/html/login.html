@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Title</title>
+    <script type="text/javascript" src="../common/resize.js"></script>
+    <link type="text/css" rel="stylesheet" href="../common/common.css"/>
+    <style type="text/css">
+        body {
+            height: initial;
+        }
+
+        .content {
+            margin: 2rem 0.8rem;
+        }
+
+        .up-input {
+            margin-bottom: 0.2rem;
+        }
+    </style>
+</head>
+<body>
+<div class="content">
+    <input class="up-input" type="text" id="name" placeholder="用户名"/>
+    <input class="up-input" type="text" id="password" placeholder="密码"/>
+
+    <input class="up-button" type="button" id="login" value="登录"/>
+</div>
+</body>
+<script type="text/javascript" src="../common/zepto.js"></script>
+<script type="text/javascript" src="../common/touch.js"></script>
+<script type="text/javascript" src="../common/util.js"></script>
+<script type="text/javascript">
+    $("#login").click(function (e) {
+        //先处理校验
+        //do somethings
+        //sign ajax
+        personal.ajax({
+            url: location.origin + "/user/login",
+            type: "post",
+            data: {
+                name: $("#name").val(),
+                password: $("#password").val()
+            },
+            callback: function (data, code, msg) {
+                console.log("=======login=========" + code + "=============");
+                console.log(data);
+            }
+        })
+
+    });
+</script>
+</html>

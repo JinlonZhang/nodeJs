@@ -46,6 +46,6 @@ routes(app);
 const SERVER = app.listen(config.port, function () {
     var address = SERVER.address();
     console.log(address);
-    console.log(`nodeApp listening on port 3000`);
+    console.log(`nodeApp listening on port ${config.port}`);
     // console.log(`${pkg.name} listening on port ${config.port}`);
 });
