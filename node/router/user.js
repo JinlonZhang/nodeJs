@@ -17,25 +17,13 @@ router.use(function timeLog(req, res, next) {
     next();
 });
 // 定义网站主页的路由
-router.get('/', function (req, res) {
+router.get('/', function (req, res, next) {
     // console.log(req);
     res.send(req.query || {});
 });
-// 定义 about 页面的路由
-router.get('/about', function (req, res) {
-    console.log(req.query);
-    res.send(req.query);
-});
-
-
-// 定义 logout 页面的路由
-router.post('/logout', function (req, res) {
-    console.log(req.body);
-    res.send('user logout');
-});
 
 // 用户注册
-router.post('/sign', function (req, res) {
+router.post('/sign', function (req, res, next) {
     console.log(req.body);
     let _body = req.body;
     //必要参数处理
@@ -58,6 +46,13 @@ router.post('/sign', function (req, res) {
         return;
     }
 
+    //sql
+    user_service.sign(_body, function (data) {
+        console.log("=============== router query callback ==========");
+        console.log(data);
+        // next(data);
+        res.json(data);
+    })
 });
 // 用户登录
 router.post('/login', function (req, res) {
@@ -107,5 +102,17 @@ router.post('/infos', function (req, res) {
     }
 });
 
+// 定义 about 页面的路由
+router.get('/about', function (req, res) {
+    console.log(req.query);
+    res.send(req.query);
+});
+
+
+// 定义 logout 页面的路由
+router.post('/logout', function (req, res) {
+    console.log(req.body);
+    res.send('user logout');
+});
 
 module.exports = router;

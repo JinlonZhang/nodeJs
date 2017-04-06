@@ -5,6 +5,8 @@
 var config = require('config-lite');
 var mysql = require('mysql');
 var pool = mysql.createPool(config.mysql_pool);
-
+pool.on("error", function (err) {
+    console.log(err);
+});
 
 module.exports = pool;

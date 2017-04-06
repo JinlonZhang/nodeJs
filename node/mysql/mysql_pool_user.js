@@ -5,14 +5,24 @@
 var pool = require("./mysql_pool");
 // var sql = 'INSERT INTO user (name, password, phone, date) VALUES (1104 , 1104 ,1104 , NOW())'
 
+/**
+ *  用户注册
+ * @param params
+ * @param callback
+ */
+exports.insert = function (params, cb) {
 
-exports.insert = function (params, callback) {
-    let post = Object.assign({date: new Date()}, params);
+    let post = Object.assign(params, {date: new Date()});
+
     pool.query('INSERT INTO user SET ?', post, function (error, results, fields) {
-        if (error) throw error;
-        console.log(fields);
-        callback(JSON.parse(JSON.stringify(results)));
+        if (error) {
+            //throw error; 不要直接排除错误
+            cb(error, results, fields);
+        } else {
+            results && cb(null, JSON.parse(JSON.stringify(results)), fields);
+        }
     });
+
 }
 /**
  * 根据用户名和密码查询 是否有相应的用户信息

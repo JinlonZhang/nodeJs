@@ -5,7 +5,7 @@
  * 10000:成功
  * 100xx:成功但没有相关记录[这个到底要不要算成功呢??] todo
  * 101xx:入参相关
- * 10200:查询数据库相关
+ * 102xx:查询数据库相关
  */
 "use strict";
 
@@ -72,6 +72,36 @@ exports.response_error_request = function (params) {
         msg: params.msg || "请求的入参格式不对!",
         result: params.result || {},
         code: 10102,//统一code
+        v: "1.0.0"
+    };
+};
+
+/**
+ * 数据库未知错误 格式化返回
+ * @param params
+ * @returns {{cmd: string, msg: string, result: {}, code: number, v: string}}
+ */
+exports.response_sql_error = function (params) {
+    return {
+        cmd: params.cmd || "",
+        msg: params.msg || "数据库挂了!",
+        result: params.result || {},
+        code: 10201,//统一code
+        v: "1.0.0"
+    };
+};
+
+/**
+ * 数据库插入违反唯一性约束 格式化返回
+ * @param params
+ * @returns {{cmd: string, msg: string, result: {}, code: number, v: string}}
+ */
+exports.response_sql_unique = function (params) {
+    return {
+        cmd: params.cmd || "",
+        msg: params.msg || "记录已存在，不容许重复!",
+        result: params.result || {},
+        code: 10202,//统一code
         v: "1.0.0"
     };
 };
