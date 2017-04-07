@@ -12,11 +12,12 @@ var pool = require("./mysql_pool");
  */
 exports.insert = function (params, cb) {
 
-    let post = Object.assign(params, {date: new Date()});
+    // let post = Object.assign(params, {date: new Date()});
 
-    pool.query('INSERT INTO user SET ?', post, function (error, results, fields) {
+    pool.query('INSERT INTO user SET ?', params, function (error, results, fields) {
         if (error) {
-            //throw error; 不要直接排除错误
+            console.log(error);
+            //throw error; 不要直接抛出错误
             cb(error, results, fields);
         } else {
             results && cb(null, JSON.parse(JSON.stringify(results)), fields);

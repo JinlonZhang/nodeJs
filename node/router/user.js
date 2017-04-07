@@ -46,6 +46,17 @@ router.post('/sign', function (req, res, next) {
         return;
     }
 
+    //手机号
+    if (/\D+/.test(_body.phone)) {
+        let _result = res_format.response_error_request({
+            cmd: "user/infos",
+            msg: "手机号错误！"
+        });
+        res.json(_result);
+
+        return;
+    }
+
     //sql
     user_service.sign(_body, function (data) {
         console.log("=============== router query callback ==========");

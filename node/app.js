@@ -49,7 +49,7 @@ routes(app);
 app.use(function (err, req, res, next) {
     console.log("=================错误处理=================")
     //其他 业务逻辑
-
+    console.log(err);
     if (res.headersSent) {
         //return next(err);
     }
