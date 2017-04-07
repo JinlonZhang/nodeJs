@@ -40,7 +40,9 @@
         personal.ajax({
             url: location.origin + "/user/infos",
             type: "post",
-            data: {},
+            data: {
+                name: 1104
+            },
             callback: function (data, code, msg) {
                 console.log(data);
             }

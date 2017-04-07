@@ -107,12 +107,26 @@ router.post('/infos', function (req, res) {
     user_service.query(_body, function (data) {
         console.log("=============== router query callback ==========");
         console.log(data);
+        //res.json(data);
 
-        //proxy 老后台查询
+        //proxy 老后台查询  todo 相关逻辑放到 service 层维护
         var url = 'http://120.132.3.52:8088/uci-pre/unionpay/shop/getIndustryInfo.json';
-        //req.pipe(request(url)).pipe(res);
 
-        res.json(data);
+        request({
+            uri: url,
+            method: "POST",
+            body: _body,
+            json: true
+        }, function (_err, _res, _resBody) {
+            console.log("=============== proxy ==========");
+            console.log(_err);
+            console.log("=============== proxy _resBody ==========");
+            console.log(_resBody);
+            console.log("=============== proxy _res ==========");
+            console.log(_res.body);
+
+            res.json(_resBody);
+        });
     })
 
 });
