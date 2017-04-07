@@ -52,7 +52,28 @@ exports.sign = function (params, callback) {
 };
 
 exports.login = function (params, callback) {
-    user_pool.query(params, function (data) {
+    user_pool.query(params, function (err,data,fields) {
+        console.log("=============== service query callback ==========");
+        console.log(data);
+        let _result = null;
+        if (Array.isArray(data) && data.length) {
+            _result = res_format.response_format({
+                cmd: "user/infos",
+                result: {login: true}
+            });
+        } else {
+            _result = res_format.response_without_result({
+                cmd: "user/login",
+                msg: "用户名或密码错误！",
+                result: {login: false}
+            });
+        }
+        callback(_result);
+    });
+};
+
+exports.query = function (params, callback) {
+    user_pool.query(params, function (err,data,fields) {
         console.log("=============== service query callback ==========");
         console.log(data);
         let _result = null;

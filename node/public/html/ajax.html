@@ -20,7 +20,7 @@
 //            console.log(JSON.stringify(data));
             console.log(data);
         }
-    })
+    });
 
     //user ajax
     personal.ajax({
@@ -29,7 +29,7 @@
         callback: function (data) {
             console.log(data);
         }
-    })
+    });
 
     personal.ajax({
         url: location.origin + "/user/about",
@@ -37,19 +37,10 @@
         callback: function (data) {
             console.log(data);
         }
-    })
+    });
 
-    personal.ajax({
-        url: location.origin + "/user/login",
-        type: "post",
-        data: {
-            type: "post",
-            target: "login"
-        },
-        callback: function (data) {
-            console.log(data);
-        }
-    })
+
+
 
 </script>
 </html>

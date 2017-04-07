@@ -4,8 +4,9 @@
 "use strict";
 var express = require('express');
 var router = express.Router();
-//mysql
-var user_pool = require("../mysql/mysql_pool_user");
+
+var request = require('request');
+
 //service
 var user_service = require("../service/user");
 //util
@@ -97,20 +98,23 @@ router.post('/infos', function (req, res) {
             cmd: "user/infos",
             msg: "name is null",
         });
-        res.json(_result);
 
+        res.json(_result);
         return;
-    } else {
-        user_pool.query("select * from user where name=1104", function (data) {
-            console.log("=============== user query callback ==========");
-            console.log(data);
-            let _result = res_format.response_format({
-                cmd: "user/infos",
-                result: data
-            });
-            res.json(_result);
-        });
     }
+
+    //sql
+    user_service.query(_body, function (data) {
+        console.log("=============== router query callback ==========");
+        console.log(data);
+
+        //proxy 老后台查询
+        var url = 'http://120.132.3.52:8088/uci-pre/unionpay/shop/getIndustryInfo.json';
+        //req.pipe(request(url)).pipe(res);
+
+        res.json(data);
+    })
+
 });
 
 // 定义 about 页面的路由
@@ -119,11 +123,5 @@ router.get('/about', function (req, res) {
     res.send(req.query);
 });
 
-
-// 定义 logout 页面的路由
-router.post('/logout', function (req, res) {
-    console.log(req.body);
-    res.send('user logout');
-});
 
 module.exports = router;
