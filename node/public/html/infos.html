@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>infos</title>
+    <script type="text/javascript" src="../common/resize.js"></script>
+    <link type="text/css" rel="stylesheet" href="../common/common.css"/>
+    <style type="text/css">
+        body {
+            height: initial;
+        }
+
+        .content {
+            margin: 2rem 0.8rem;
+        }
+
+    </style>
+</head>
+<body>
+<div class="content">
+    hi ,
+</div>
+</body>
+<script type="text/javascript" src="../common/zepto.js"></script>
+<script type="text/javascript" src="../common/touch.js"></script>
+<script type="text/javascript" src="../common/util.js"></script>
+<script type="text/javascript">
+    $(function () {
+        try {
+            let _userInfo = sessionStorage.getItem("userInfo");
+            _userInfo = _userInfo && JSON.parse(_userInfo);
+            if (_userInfo && _userInfo.name) {
+                $(".content").text("hi ," + _userInfo.name);
+            } else {
+                $(".content").text("你未登录！");
+            }
+        } catch (e) {
+            $(".content").text("你未登录！")
+        }
+
+
+    })
+</script>
+</html>

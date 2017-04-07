@@ -64,6 +64,7 @@ exports.login = function (params, callback) {
         } else {
             _result = res_format.response_without_result({
                 cmd: "user/login",
+                msg: "用户名或密码错误！",
                 result: {login: false}
             });
         }

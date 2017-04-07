@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>Title</title>
+    <title>sign</title>
     <script type="text/javascript" src="../common/resize.js"></script>
     <link type="text/css" rel="stylesheet" href="../common/common.css"/>
     <style type="text/css">
@@ -50,6 +50,15 @@
             callback: function (data, code, msg) {
                 console.log("=======sign=========" + code + "=============");
                 console.log(data);
+                if (100 == code) {
+                    let _userInfo = {
+                        name: $("#name").val()
+                    };
+                    sessionStorage.setItem("userInfo", JSON.stringify(_userInfo));
+                    window.location.href = "./infos.html";
+                } else {
+                    alert(data.msg || msg);
+                }
             }
         })
 

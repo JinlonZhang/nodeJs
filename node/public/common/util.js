@@ -451,7 +451,7 @@ window.personal = window.personal || {};
                             "code": 0,
                             "message": "没有返回值",
                             "result": {}
-                        }, "没有返回值", 99);
+                        }, data.msg || "没有返回值", 99);
                 }
             },
             error: function (xhr, errorType, error) {
