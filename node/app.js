@@ -5,6 +5,7 @@
 //相关依赖
 var path = require('path');
 var express = require("express");
+var favicon = require('serve-favicon');
 var pug = require('pug');
 var config = require('config-lite');
 var bodyParser = require('body-parser');
@@ -15,6 +16,8 @@ const routes = require('./router/index');//require('./router');
 // var pkg = require('../package');
 //实例
 var app = express();
+//设置地址栏icon
+app.use(favicon(path.join(__dirname, './public', 'image/favicon/logo.ico')));
 
 // 设置模板目录和模板引擎pug
 app.set('views', path.join(__dirname, 'view'));
