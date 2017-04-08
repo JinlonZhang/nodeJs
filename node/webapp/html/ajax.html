@@ -6,8 +6,8 @@
     <title>ajax</title>
 </head>
 <body>
-<form method="post" action="http://127.0.0.1:3000/user/logout">
-    <input name="target" value="user/logout">
+<form method="post" action="http://127.0.0.1:3000/user">
+    <input name="target" value="user">
     <input type="submit" value="Submit">
 </form>
 </body>
@@ -26,20 +26,13 @@
     personal.ajax({
         url: location.origin + "/user",
         type: "get",
+        data: {
+            cmd: "/user"
+        },
         callback: function (data) {
             console.log(data);
         }
     });
-
-    personal.ajax({
-        url: location.origin + "/user/about",
-        type: "get",
-        callback: function (data) {
-            console.log(data);
-        }
-    });
-
-
 
 
 </script>

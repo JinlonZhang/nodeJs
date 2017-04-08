@@ -11,6 +11,10 @@ module.exports = function (app) {
     app.use('/user', require('./user'));
 
 
+    //以下路由配置为测试路由
+    app.use('/proxy', require('./proxy'));
+
+
     // 404 page
     app.use(function (req, res) {
         if (!res.headersSent) {

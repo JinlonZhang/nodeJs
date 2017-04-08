@@ -5,8 +5,6 @@
 var express = require('express');
 var router = express.Router();
 
-var request = require('request');
-
 //service
 var user_service = require("../service/user");
 //util
@@ -73,7 +71,7 @@ router.post('/login', function (req, res) {
     //必要参数处理
     if (!(_body.name && _body.password)) {
         let _result = res_format.response_without_request({
-            cmd: "user/infos"
+            cmd: "user/login"
         });
         res.json(_result);
 
@@ -89,53 +87,5 @@ router.post('/login', function (req, res) {
     })
 
 });
-// 查询用户信息
-router.post('/infos', function (req, res) {
-    console.log(req.body);
-    let _body = req.body;
-    if (!_body.name) {
-        let _result = res_format.response_without_request({
-            cmd: "user/infos",
-            msg: "name is null",
-        });
-
-        res.json(_result);
-        return;
-    }
-
-    //sql
-    user_service.query(_body, function (data) {
-        console.log("=============== router query callback ==========");
-        console.log(data);
-        //res.json(data);
-
-        //proxy 老后台查询  todo 相关逻辑放到 service 层维护
-        var url = 'http://120.132.3.52:8088/uci-pre/unionpay/shop/getIndustryInfo.json';
-
-        request({
-            uri: url,
-            method: "POST",
-            body: _body,
-            json: true
-        }, function (_err, _res, _resBody) {
-            console.log("=============== proxy ==========");
-            console.log(_err);
-            console.log("=============== proxy _resBody ==========");
-            console.log(_resBody);
-            console.log("=============== proxy _res ==========");
-            console.log(_res.body);
-
-            res.json(_resBody);
-        });
-    })
-
-});
-
-// 定义 about 页面的路由
-router.get('/about', function (req, res) {
-    console.log(req.query);
-    res.send(req.query);
-});
-
 
 module.exports = router;

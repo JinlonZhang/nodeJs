@@ -14,13 +14,13 @@ exports.insert = function (params, cb) {
 
     // let post = Object.assign(params, {date: new Date()});
 
-    pool.query('INSERT INTO userinfo SET ?', post, function (error, results, fields) {
+    pool.query('INSERT INTO user SET ?', params, function (error, results, fields) {
         if (error) {
             console.log(error);
             //throw error; 不要直接抛出错误
             cb(error, results, fields);
         } else {
-            results && cb(null, JSON.parse(JSON.stringify(results)), fields);
+            cb(null, JSON.parse(JSON.stringify(results)), fields);
         }
     });
 
@@ -32,16 +32,13 @@ exports.insert = function (params, cb) {
  */
 exports.query = function (params, callback) {
     let post = [params.name, params.password];
-    pool.query("SELECT * FROM userinfo WHERE name = ? AND password = ?", post, function (error, results, fields) {
-        if (error) throw error;
-        // console.log(fields);
-        callback(JSON.parse(JSON.stringify(results)));
+    pool.query("SELECT * FROM user WHERE name = ? AND password = ?", post, function (error, results, fields) {
+        if (error) {
+            // throw error;
+            callback(error, results, fields);
+        } else {
+            callback(null, JSON.parse(JSON.stringify(results)), fields);
+        }
     });
 }
 
-exports.update = function (sql, callback) {
-    pool.query(sql, function (error, results, fields) {
-        if (error) throw error;
-        callback(JSON.parse(JSON.stringify(results)));
-    });
-}

@@ -18,7 +18,7 @@
     </style>
 </head>
 <body>
-<div class="btn query">query</div>
+<div class="btn query">proxy</div>
 <div class="btn insert">insert</div>
 </body>
 <script type="text/javascript" src="../common/zepto.js"></script>
@@ -26,19 +26,8 @@
 <script type="text/javascript">
 
     $(".query").click(function (e) {
-        //user ajax
-//        personal.ajax({
-//            url: location.origin + "/user/infos",
-//            type: "post",
-//            data: {
-//                name: 1104
-//            },
-//            callback: function (data, code, msg) {
-//                console.log(data);
-//            }
-//        });
         personal.ajax({
-            url: location.origin + "/user/infos",
+            url: location.origin + "/proxy/proxy",
             type: "post",
             data: {
                 name: 1104
@@ -50,14 +39,6 @@
     });
 
     $(".btns").click(function (e) {
-        personal.ajax({
-            url: location.origin + "/user/about",
-            type: "get",
-            callback: function (data) {
-                console.log(data);
-            }
-        })
-
         personal.ajax({
             url: location.origin + "/user/login",
             type: "post",

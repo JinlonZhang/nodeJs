@@ -17,7 +17,7 @@ const routes = require('./router/index');//require('./router');
 //实例
 var app = express();
 //设置地址栏icon
-app.use(favicon(path.join(__dirname, './public', 'image/favicon/logo.ico')));
+app.use(favicon(path.join(__dirname, './public', 'favicon/favi.ico')));
 
 // 设置模板目录和模板引擎pug
 app.set('views', path.join(__dirname, 'view'));
@@ -25,7 +25,10 @@ app.set('views', path.join(__dirname, 'view'));
 app.set('view engine', 'pug');
 
 // 设置静态文件目录
-app.use('/src', express.static(path.join(__dirname, './public')));
+app.use('/node', express.static(path.join(__dirname, './public')));
+// 前端 静态资源区 [更多配置 查看官方api]
+// app.use('/', express.static(path.join(__dirname, './webapp')，{maxAge: 1000}));
+app.use(express.static(path.join(__dirname, './webapp'), {maxAge: 1000}));
 
 // 设置模板全局常量
 app.locals.blog = {
