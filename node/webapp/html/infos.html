@@ -12,14 +12,22 @@
         }
 
         .content {
-            margin: 2rem 0.8rem;
+            margin: 0.2rem 0.8rem;
+        }
+
+        .logo {
+            width: 2rem;
+            height: 2rem;
+            margin: 0 auto;
+            border-radius: 100%;
         }
 
     </style>
 </head>
 <body>
 <div class="content">
-    hi ,
+    <div class="logo"><img src="../image/logo.jpg"></div>
+    <h3 id="info"> hi ,</h3>
 </div>
 </body>
 <script type="text/javascript" src="../common/zepto.js"></script>
@@ -31,12 +39,12 @@
             let _userInfo = sessionStorage.getItem("userInfo");
             _userInfo = _userInfo && JSON.parse(_userInfo);
             if (_userInfo && _userInfo.name) {
-                $(".content").text("hi ," + _userInfo.name);
+                $("#info").text("hi ," + _userInfo.name);
             } else {
-                $(".content").text("你未登录！");
+                $("#info").text("你未登录！");
             }
         } catch (e) {
-            $(".content").text("你未登录！")
+            $("#info").text("你未登录！")
         }
 
 
