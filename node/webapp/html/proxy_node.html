@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>node_proxy</title>
+    <script type="text/javascript" src="../common/resize.js"></script>
+    <link type="text/css" rel="stylesheet" href="../common/common.css"/>
+    <style type="text/css">
+        input, textarea {
+            background-color: #fff;
+            width: 80%;
+            line-height: 1rem;
+            margin: 0.2rem auto;
+        }
+
+        textarea {
+            height: 6rem;
+        }
+    </style>
+</head>
+<body>
+<header>node proxy</header>
+<h4>url</h4>
+<input id="url" type="text" placeholder="中转的请求地址"/>
+<h4>参数</h4>
+<textarea id="params" placeholder="请求参数">
+</textarea>
+
+<div id="btn">提交</div>
+</body>
+<script type="text/javascript" src="../common/zepto.js"></script>
+<script type="text/javascript" src="../common/touch.js"></script>
+<script type="text/javascript" src="../common/util.js"></script>
+<script type="text/javascript">
+
+    function proxy(params) {
+        if (!(params.url && params.data)) {
+            return;
+        }
+        personal.ajax({
+            url: location.origin + "/proxy/proxy_prod",
+            data: {
+                url: params.url,
+                data: params.data || {}
+            },
+            callback: function (data, code, msg) {
+                console.log(data);
+            }
+        })
+    }
+
+
+    $("#btn").click(function (e) {
+        let params = {
+            url: "",
+            test: {
+                cityCd: "320100",
+                couponNo: "U00000000142671",
+                shopNo: "30010",
+                srcCouponNo: "U00000000142671",
+                userLat: 31.234083,
+                userLnt: 121.66401,
+                userNo: "877fb63f4452c4223d7adb90383c9f18",
+                webp: true
+            },
+            data: {}
+        };
+        let _url = $("#url").val().trim();
+        let _params = $("#params").val();
+        console.log(_params);
+        let _paramsArr = _params.replace(/[\n\t\r]/ig, ",").split(",");
+        for (let item of _paramsArr) {
+            let _item = item.split(":");
+            if (_item.length > 1) {
+                params.data[_item[0].trim()] = _item[1].trim().replace(/["']+/g, "");
+            }
+        }
+        console.log(params);
+
+        params.url = _url;
+        proxy(params);
+    })
+
+</script>
+</html>

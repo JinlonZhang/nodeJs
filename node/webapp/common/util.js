@@ -433,7 +433,7 @@ window.personal = window.personal || {};
         //2016-9-26 新增webp的图片格式判断
         params.data = params.data || {};
         params.data.webp = this.supportWebp;
-        console.log(params.data);
+        console.log(params);
         var _params = {
             type: params.type || "post",//默认post请求
             url: url,
@@ -489,6 +489,57 @@ window.personal = window.personal || {};
                         error: error
                     });
                 }
+            }
+        };
+        (function () {
+            if (params.loading) {
+                _this.ui.loading();
+            }
+            $.ajax(_params);
+        })();
+    };
+
+    this.fileAjax = function (params) {
+        var url = '';
+        if (/^https?/.test(params.url)) {
+            //绝对地址
+            url = params.url;
+        } else {
+            //相对地址
+            url = location.origin + params.url;
+        }
+        console.log(url);
+        //2016-9-26 新增webp的图片格式判断
+        params.data = params.data || {};
+        //params.data.webp = this.supportWebp;
+        console.log(params);
+        var _params = {
+            type: "post",//默认post请求
+            url: url,
+            dataType: params.dataType || "json",//默认json返回
+            processData: false,
+            contentType: false,
+            data: params.data,
+            success: function (data) {
+                // _this.ui && _this.ui.hideLoading();
+                if (data && data.code == 10000) {
+                    console.log("success");
+                    _this.successCallback(params.callback, data);
+                } else {
+                    _this.errorCallback(params.callback, data || {
+                            "success": false,
+                            "code": 0,
+                            "message": "没有返回值",
+                            "result": {}
+                        }, data.msg || "没有返回值", 99);
+                }
+            },
+            error: function (xhr, errorType, error) {
+                _this.errorCallback(params.callback, {
+                    xhr: xhr,
+                    errorType: errorType,
+                    error: error
+                });
             }
         };
         (function () {

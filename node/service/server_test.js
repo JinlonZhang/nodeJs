@@ -42,8 +42,8 @@ exports.proxy = function (params, callback) {
                     _result = res_format.response_format({
                         cmd: "proxy/proxy",
                         result: {
-                            data_1:data,
-                            data_2:_resBody
+                            data_1: data,
+                            data_2: _resBody
                         }
                     });
                     //
@@ -63,3 +63,34 @@ exports.proxy = function (params, callback) {
 
     });
 };
+
+exports.proxy_prod = function (params, callback) {
+    let _result = null;
+    request({
+        uri: params.url,
+        method: params.type || "POST",
+        body: params.data,
+        json: true
+    }, function (err, res, resBody) {
+        console.log("=============== proxy ==========");
+        console.log(err);
+        console.log("=============== proxy _resBody ==========");
+        console.log(resBody);
+        console.log("=============== proxy _res ==========");
+        console.log(res.body);
+
+        if (err) {
+            _result = res_format.response_without_result({
+                cmd: "proxy/proxy_prod",
+                result: resBody
+            });
+        } else {
+            _result = res_format.response_format({
+                cmd: "proxy/proxy_prod",
+                result: resBody
+            });
+        }
+        //
+        callback(_result);
+    });
+}

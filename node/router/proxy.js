@@ -33,6 +33,18 @@ router.post('/proxy', function (req, res) {
     })
 
 });
+//proxy_prod
+router.post('/proxy_prod', function (req, res) {
+    console.log(req.body);
+    let _body = req.body;
 
+    //proxy_prod
+    test_service.proxy_prod(_body, function (data) {
+        console.log("=============== proxy query callback ==========");
+        console.log(data);
+        res.json(data);
+    })
+
+});
 
 module.exports = router;
