@@ -2,6 +2,7 @@
  * Created by xiaogang on 2017/4/6.
  */
 "use strict";
+var md5 = require('md5');
 //mysql
 var user_pool = require("../mysql/mysql_pool_user");
 var userlogo_pool = require("../mysql/mysql_pool_userlogo");
@@ -16,7 +17,7 @@ var util = require("../util/util");
 exports.sign = function (params, callback) {
     let _params = {
         name: params.name,
-        password: params.password,
+        password: md5(params.password),
         phone: params.phone
     };
     user_pool.insert(_params, function (err, data, fields) {
@@ -61,7 +62,11 @@ exports.sign = function (params, callback) {
  * @param callback
  */
 exports.login = function (params, callback) {
-    user_pool.query(params, function (err, data, fields) {
+    let _params = {
+        name: params.name,
+        password: md5(params.password)
+    };
+    user_pool.query(_params, function (err, data, fields) {
         console.log("=============== service query callback ==========");
         console.log(data);
         let _result = null;

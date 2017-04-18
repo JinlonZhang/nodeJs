@@ -19,7 +19,7 @@ exports.proxy = function (params, callback) {
             _result = res_format.response_sql_error({
                 cmd: "proxy/proxy",
                 result: {sign: false}
-            })
+            });
 
             callback(_result);
         } else {

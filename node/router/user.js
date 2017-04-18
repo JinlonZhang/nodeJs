@@ -1,6 +1,6 @@
 /**
  * Created by xiaogang on 2017/4/4.
- * 使用 multer 插件 封装文件上传 模块
+ *
  */
 "use strict";
 var express = require('express');

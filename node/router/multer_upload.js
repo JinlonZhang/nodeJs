@@ -1,5 +1,6 @@
 /**
  * Created by xiaogang on 2017/4/18.
+ * 使用 multer 插件 封装文件上传 模块
  */
 "use strict";
 var multer = require('multer');
@@ -9,12 +10,12 @@ var multer = require('multer');
 // 根据 请求动态设置
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        console.log("=========destination =======")
-        cb(null, 'public/logo');
+        console.log("=========destination =======");
+        cb(null, 'public/' + file.fieldname);
     },
     filename: function (req, file, cb) {
-        console.log("=========filename =======")
-        cb(null, req.body.userName + '_' + file.fieldname + '_' + Date.now() + "_" + file.originalname);
+        console.log("=========filename =======");
+        cb(null, file.fieldname + '_' + req.body.userName + '_' + Date.now() + "_" + file.originalname);
     }
 });
 
