@@ -1,5 +1,6 @@
 /**
  * Created by xiaogang on 2017/4/4.
+ * 使用 multer 插件 封装文件上传 模块
  */
 "use strict";
 var express = require('express');
@@ -9,6 +10,8 @@ var router = express.Router();
 var user_service = require("../service/user");
 //util
 var res_format = require("../util/response_format");
+//multer upload
+var upload = require('./multer_upload');
 
 // 该路由使用的中间件 timeLog
 router.use(function timeLog(req, res, next) {
@@ -84,6 +87,28 @@ router.post('/login', function (req, res) {
         console.log("=============== router query callback ==========");
         console.log(data);
         res.json(data);
+    })
+
+});
+
+
+/**
+ * 设置用户logo
+ */
+router.post('/logo', upload.single('logo'), function (req, res) {
+    // console.log(req.body);
+    // console.log(req.file);
+    if (!(req.body.userName && req.file)) {
+        res.json(res_format.response_without_request({
+            cmd: "user/logo"
+        }));
+
+        return;
+    }
+
+    user_service.logo(req, function (data) {
+        console.log("=============== router logo callback ==========");
+        res.json(Object.assign(data, {cmd: "user/logo"}));
     })
 
 });

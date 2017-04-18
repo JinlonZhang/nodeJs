@@ -23,10 +23,8 @@
             border-radius: 100%;
         }
 
-        .logo .upload {
+        .logo .upload, .logo img {
             display: inline-block;
-            background: url("../image/logo.jpg") center center;
-            background-size: cover;
             width: 100%;
             height: 100%;
         }
@@ -45,7 +43,7 @@
 <body>
 <div class="content">
     <div class="logo">
-        <span class="upload"></span>
+        <span class="upload"><img id="userLogo" src="http://127.0.0.1:3000/1104/logo/default.jpg"></span>
         <input id="logo" type="file"
                accept="image/jpeg,image/gif,image/png,image/bmp"
         />
@@ -91,6 +89,7 @@
                 data: formData,
                 success: function (data) {
                     console.log(data);
+                    (data.code == 10000) && $("#userLogo").attr("src", data.result.path);
                 }, error: function (data) {
                     console.log(data);
                 }
@@ -98,24 +97,24 @@
         });
 
         //
-        personal.ajax({
-            url: location.origin + "/proxy/proxy_prod",
-            data: {
-                url: "https://content.95516.com/uci-pre/unionpay/coupon/getCouponDetailInfo.json",
-                data: {
-                    cityCd: "320100",
-                    couponNo: "U00000000142671",
-                    shopNo: "30010",
-                    srcCouponNo: "U00000000142671",
-                    userLat: 31.234083,
-                    userLnt: 121.66401,
-                    userNo: "877fb63f4452c4223d7adb90383c9f18"
-                }
-            },
-            callback: function (data, code, msg) {
-                console.log(data);
-            }
-        })
+//        personal.ajax({
+//            url: location.origin + "/proxy/proxy_prod",
+//            data: {
+//                url: "https://content.95516.com/uci-pre/unionpay/coupon/getCouponDetailInfo.json",
+//                data: {
+//                    cityCd: "320100",
+//                    couponNo: "U00000000142671",
+//                    shopNo: "30010",
+//                    srcCouponNo: "U00000000142671",
+//                    userLat: 31.234083,
+//                    userLnt: 121.66401,
+//                    userNo: "877fb63f4452c4223d7adb90383c9f18"
+//                }
+//            },
+//            callback: function (data, code, msg) {
+//                console.log(data);
+//            }
+//        })
 
     })
 </script>

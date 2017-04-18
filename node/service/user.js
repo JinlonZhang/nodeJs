@@ -4,10 +4,15 @@
 "use strict";
 //mysql
 var user_pool = require("../mysql/mysql_pool_user");
+var userlogo_pool = require("../mysql/mysql_pool_userlogo");
 //util
 var res_format = require("../util/response_format");
-
-
+var util = require("../util/util");
+/**
+ * 用户注册
+ * @param params
+ * @param callback
+ */
 exports.sign = function (params, callback) {
     let _params = {
         name: params.name,
@@ -50,9 +55,13 @@ exports.sign = function (params, callback) {
         callback(_result);
     });
 };
-
+/**
+ * 用户登录
+ * @param params
+ * @param callback
+ */
 exports.login = function (params, callback) {
-    user_pool.query(params, function (err,data,fields) {
+    user_pool.query(params, function (err, data, fields) {
         console.log("=============== service query callback ==========");
         console.log(data);
         let _result = null;
@@ -70,4 +79,43 @@ exports.login = function (params, callback) {
         }
         callback(_result);
     });
+};
+
+/**
+ * 用户头像修改
+ * @param params
+ * @param callback
+ */
+exports.logo = function (params, callback) {
+    console.log(params.body);
+    console.log(params.file);
+    let _file = params.file;
+    let _params = {
+        username: params.body.userName,
+        originalname: _file.originalname,
+        type: _file.mimetype,
+        filename: _file.filename,
+        path: _file.path
+    };
+    userlogo_pool.insert(_params, function (err, data, fields) {
+        let _result = null;
+        if (err) {
+            //数据库错误
+            _result = res_format.response_sql_error({
+                result: {logo: false}
+            });
+        } else {
+            console.log(params.hostname);
+            console.log(util.absolutePath(_file.path));
+            _result = res_format.response_format({
+                result: {
+                    path: util.absolutePath(_file.path)
+                }
+            })
+        }
+
+        callback(_result);
+    });
+
+
 };

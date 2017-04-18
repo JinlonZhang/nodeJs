@@ -1,5 +1,7 @@
 module.exports = {
     port: 3000,
+    origin: "http://127.0.0.1:3000",
+    publicPath: '/1104',//后台静态资源存储区
     session: {
         secret: 'myblog',
         key: 'myblog',

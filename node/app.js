@@ -25,7 +25,7 @@ app.set('views', path.join(__dirname, 'view'));
 app.set('view engine', 'pug');
 
 // 设置静态文件目录
-app.use('/node', express.static(path.join(__dirname, './public')));
+app.use(config.publicPath, express.static(path.join(__dirname, './public')));
 // 前端 静态资源区 [更多配置 查看官方api]
 // app.use('/', express.static(path.join(__dirname, './webapp')，{maxAge: 1000}));
 app.use(express.static(path.join(__dirname, './webapp'), {maxAge: 1000}));
@@ -43,7 +43,7 @@ app.locals.blog = {
 //      strict: false
 // })); // for parsing application/json
 app.use(bodyParser.json()); // for parsing application/json
-app.use(bodyParser.urlencoded({extended: true})); // for parsing application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({extended: false})); // for parsing application/x-www-form-urlencoded
 
 // 路由
 routes(app);
