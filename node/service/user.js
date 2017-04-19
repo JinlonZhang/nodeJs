@@ -151,5 +151,4 @@ exports.logo = function (params, callback) {
         callback(_result);
     });
 
-
 };
