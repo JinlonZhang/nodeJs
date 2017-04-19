@@ -18,7 +18,7 @@ const routes = require('./router/index');//require('./router');
 //实例
 var app = express();
 //设置地址栏icon
-app.use(favicon(path.join(__dirname, './public', 'favicon/favi.ico')));
+app.use(favicon(path.join(__dirname, './public', 'favicon/favicon.ico')));
 
 // 设置模板目录和模板引擎pug
 app.set('views', path.join(__dirname, 'view'));

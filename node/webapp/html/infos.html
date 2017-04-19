@@ -100,19 +100,12 @@
             formData.append('userName', _userInfo.name)
             formData.append('logo', this.files[0]);
             console.log(formData);
-            $.ajax({
+            personal.fileAjax({
                 url: location.origin + "/user/logo",
-                type: "post",
-                dataType: "json",
-                cache: false,
-                processData: false,
-                contentType: false,
                 data: formData,
-                success: function (data) {
+                callback: function (data) {
                     console.log(data);
                     (data.code == 10000) && $("#userLogo").attr("src", data.result.path);
-                }, error: function (data) {
-                    console.log(data);
                 }
             })
         });
