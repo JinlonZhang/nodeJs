@@ -4,6 +4,24 @@
 "use strict";
 var pool = require("./mysql_pool");
 // var sql = 'INSERT INTO user (name, password, phone, date) VALUES (1104 , 1104 ,1104 , NOW())'
+/**
+ * 封装 查单表 sql 语句处理
+ * @param table
+ * @param params
+ * @returns {{sql: string, values: Array}}
+ */
+function query_params(table = "user", params) {
+    let post = [];
+    let queryArr = [];
+    for (let key in params) {
+        post.push(params[key]);
+        queryArr.push(key + ' = ?');
+    }
+    return {
+        sql: "SELECT * FROM " + table + " WHERE " + queryArr.join(" AND "),
+        values: post
+    };
+}
 
 /**
  *  用户注册
@@ -31,8 +49,9 @@ exports.insert = function (params, cb) {
  * @param callback
  */
 exports.query = function (params, callback) {
-    let post = [params.name, params.password];
-    pool.query("SELECT * FROM user WHERE name = ? AND password = ?", post, function (error, results, fields) {
+    let _queryData = query_params("user", params);
+    console.log(_queryData);
+    pool.query(_queryData, function (error, results, fields) {
         if (error) {
             // throw error;
             callback(error, results, fields);
@@ -40,5 +59,5 @@ exports.query = function (params, callback) {
             callback(null, JSON.parse(JSON.stringify(results)), fields);
         }
     });
-}
+};
 

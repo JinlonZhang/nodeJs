@@ -69,7 +69,8 @@ router.post('/sign', function (req, res, next) {
 });
 // 用户登录
 router.post('/login', function (req, res) {
-    console.log(req.body);
+    req.session.userId = req.body.name;
+    console.log(req.session);
     let _body = req.body;
     //必要参数处理
     if (!(_body.name && _body.password)) {
@@ -80,22 +81,41 @@ router.post('/login', function (req, res) {
 
         return;
     }
-    //密码的 md5 处理
+    //密码的 md5 处理[放到了service层控制]
 
     //sql
     user_service.login(_body, function (data) {
-        console.log("=============== router query callback ==========");
-        console.log(data);
         res.json(data);
     })
 
 });
+/**
+ * 获取 用户 信息
+ */
+router.post('/info', function (req, res) {
+    console.log(req.session);
+    console.log(req.body);
+    let _body = req.body;
 
+    if (!_body.name) {
+        let _result = res_format.response_without_request({
+            cmd: "user/info"
+        });
+        res.json(_result);
+
+        return;
+    }
+    //sql
+    user_service.info(req.session, function (data) {
+        res.json(data);
+    })
+});
 
 /**
  * 设置用户logo
  */
 router.post('/logo', upload.single('logo'), function (req, res) {
+    console.log(req.session);
     // console.log(req.body);
     // console.log(req.file);
     if (!(req.body.userName && req.file)) {

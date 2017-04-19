@@ -67,17 +67,14 @@ exports.login = function (params, callback) {
         password: md5(params.password)
     };
     user_pool.query(_params, function (err, data, fields) {
-        console.log("=============== service query callback ==========");
-        console.log(data);
+        console.log("=============== service login callback ==========");
         let _result = null;
         if (Array.isArray(data) && data.length) {
             _result = res_format.response_format({
-                cmd: "user/infos",
                 result: {login: true}
             });
         } else {
             _result = res_format.response_without_result({
-                cmd: "user/login",
                 msg: "用户名或密码错误！",
                 result: {login: false}
             });
@@ -86,6 +83,37 @@ exports.login = function (params, callback) {
     });
 };
 
+exports.info = function (params, callback) {
+    console.log("========info params===========");
+    console.log(params);
+    let _params = {
+        name: params.userId,
+    };
+    user_pool.query(_params, function (err, data, fields) {
+        console.log(data);
+        let _result = null;
+        if (err) {
+            //数据库错误
+            _result = res_format.response_sql_error({
+                result: err
+            })
+        } else {
+            if (Array.isArray(data) && data.length) {
+                _result = res_format.response_format({
+                    result: data
+                });
+            } else {
+                _result = res_format.response_without_result({
+                    msg: "请重新登录！",
+                    result: {info: false}
+                });
+            }
+        }
+
+        callback(_result);
+    });
+
+};
 /**
  * 用户头像修改
  * @param params

@@ -62,6 +62,7 @@
             _userInfo = _userInfo && JSON.parse(_userInfo);
             if (_userInfo && _userInfo.name) {
                 $("#info").text("hi ," + _userInfo.name);
+                userInfo(_userInfo);
             } else {
                 $("#info").text("你未登录！");
             }
@@ -69,6 +70,26 @@
             _userInfo = null;
             $("#info").text("你未登录！")
         }
+
+        function userInfo(userInfo) {
+            personal.ajax({
+                url: location.origin + "/user/info",
+                type: "post",
+                data: {
+                    name: userInfo.name
+                },
+                callback: function (data, code, msg) {
+                    console.log("=======login=========" + code + "=============");
+                    console.log(data);
+                    if (100 == code) {
+
+                    } else {
+                        alert(msg);
+                    }
+                }
+            })
+        }
+
         //logo
         $("#logo").change(function (e) {
             console.log(e);
