@@ -13,6 +13,8 @@ var pool = require("./mysql_pool");
  * @param callback 回调 处理结果
  */
 exports.query = function (queryData, callback) {
+    console.log("============pool base ================");
+    console.log(queryData);
     pool.query(queryData, function (error, results, fields) {
         if (error) {
             // throw error;

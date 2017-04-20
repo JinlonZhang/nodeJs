@@ -26,7 +26,7 @@
     <input class="up-input" type="text" id="pwd" placeholder="密码[8-16位字母、数字和!@#$%^&*()-]"/>
     <input class="up-input" type="password" id="password" placeholder="确认您的密码"/>
     <input class="up-input" type="tel" id="phone" placeholder="手机号"/>
-
+    <input class="up-input" type="text" id="verifycode" placeholder="验证码"/>
     <input class="up-button" type="button" id="sign" value="注册"/>
 </div>
 </body>
@@ -45,6 +45,7 @@
                 name: $("#name").val(),
                 pwd: $("#pwd").val(),
                 password: $("#password").val(),
+                verifycode: $("#verifycode").val(),
                 phone: $("#phone").val()
             },
             callback: function (data, code, msg) {
@@ -63,5 +64,20 @@
         })
 
     });
+
+    function verifyCode() {
+        personal.ajax({
+            url: location.origin + "/user/verifycode",
+            callback: function (data, code, msg) {
+                console.log(data);
+                console.log(document.cookie);
+                if (code == 100) {
+                    $("#verifycode").attr("placeholder", "请输入验证码：" + data.result.code);
+                }
+            }
+        })
+    }
+
+    verifyCode();
 </script>
 </html>

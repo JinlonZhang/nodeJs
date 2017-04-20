@@ -2,9 +2,11 @@
  * Created by xiaogang on 2017/4/6.
  */
 "use strict";
+
+
 var md5 = require('md5');
 //mysql
-var pool_
+var pool_sql = require("../mysql/mysql_pool_sql");
 var user_pool = require("../mysql/mysql_pool_user");
 var userlogo_pool = require("../mysql/mysql_pool_userlogo");
 //util
@@ -21,7 +23,7 @@ exports.sign = function (params, callback) {
         password: md5(params.password),
         phone: params.phone
     };
-    user_pool.insert(_params, function (err, data, fields) {
+    pool_sql.insert_single_table('user', _params, function (err, data, fields) {
         console.log("=============== service query callback ==========");
         console.log(data);
         let _result = null;
@@ -29,27 +31,24 @@ exports.sign = function (params, callback) {
             if (err.errno == 1062) {
                 //用户已存在，违反唯一性约束
                 _result = res_format.response_sql_unique({
-                    cmd: "user/sign",
                     msg: "用户名已被抢注！",
                     result: {sign: false, msg: "用户名已被抢注！"}
                 })
             } else {
                 //其他数据库错误
                 _result = res_format.response_sql_error({
-                    cmd: "user/sign",
                     result: {sign: false}
                 })
             }
         } else {
             // data = JSON.parse(JSON.stringify(data));
             if (data && data.affectedRows) {
+                //设置 session
                 _result = res_format.response_format({
-                    cmd: "user/sign",
-                    result: {sign: true}
+                    result: {sign: true, name: params.name}
                 });
             } else {
                 _result = res_format.response_without_result({
-                    cmd: "user/sign",
                     result: {sign: false}
                 });
             }

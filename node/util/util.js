@@ -3,13 +3,15 @@
  */
 "use strict";
 var config = require('config-lite');
+//
+const validate = require('./validate');
 /**
  *
  * @param value
  * @returns {boolean}
  */
 exports.isFunction = function (value) {
-    return type(value) == "function";
+    return typeof(value) == "function";
 };
 /**
  * 将静态 服务端资源的相对路径 转换为 可以直接访问的绝对 路径
@@ -18,4 +20,20 @@ exports.isFunction = function (value) {
  */
 exports.absolutePath = function (relativePath) {
     return config.origin + relativePath.replace(/\\/ig, "/").replace(/^\/?public/i, config.publicPath);
+};
+
+/**
+ * 校验表单
+ * @param params
+ * @returns {*}
+ */
+exports.validateForm = function (params) {
+    let _invalidMsg = '';
+    for (let key in params) {
+        _invalidMsg = validate[key](params[key]);
+        if (_invalidMsg) {
+            return _invalidMsg;
+        }
+    }
+    return _invalidMsg;
 };

@@ -5,7 +5,8 @@ module.exports = {
     session: {
         secret: 'zling',//加密串
         key: '1104',//客户端展示
-        maxAge: 30 * 24 * 60 * 60 * 1000
+        maxAge: 7 * 24 * 60 * 60 * 1000,//存储时间
+        userId: 'userId'//服务端用户唯一标识
     },
     mongodb: 'mongodb://localhost:27017/demo',
     mysql: {
