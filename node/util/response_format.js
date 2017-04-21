@@ -52,7 +52,7 @@ exports.response_without_result = function (params) {
  * @param params
  * @returns {{cmd: string, msg: string, params: (Object|Array), code: number, v: string}}
  */
-exports.response_without_request = function (params) {
+exports.response_without_request = function (params = {}) {
     return {
         cmd: params.cmd || "",
         msg: params.msg || "请求的入参缺失!",
@@ -105,3 +105,17 @@ exports.response_sql_unique = function (params) {
         v: "1.0.0"
     };
 };
+/**
+ * 用户未登录
+ * @param params
+ * @returns {{cmd: string, msg: string, result: {}, code: number, v: string}}
+ */
+exports.response_user_none = function (params = {}) {
+    return {
+        cmd: params.cmd || "",
+        msg: params.msg || "用户未登录！",
+        result: params.result || {},
+        code: 10301,//统一code
+        v: "1.0.0"
+    };
+}

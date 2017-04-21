@@ -19,6 +19,7 @@ exports.isFunction = function (value) {
  * @returns {string}
  */
 exports.absolutePath = function (relativePath) {
+    console.log(relativePath);
     return config.origin + relativePath.replace(/\\/ig, "/").replace(/^\/?public/i, config.publicPath);
 };
 

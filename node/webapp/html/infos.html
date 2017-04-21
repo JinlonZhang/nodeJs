@@ -82,7 +82,7 @@
                     console.log("=======login=========" + code + "=============");
                     console.log(data);
                     if (100 == code) {
-
+                        $("#userLogo").attr("src", data.result.path);
                     } else {
                         alert(msg);
                     }

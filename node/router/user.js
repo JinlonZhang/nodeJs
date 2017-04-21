@@ -133,15 +133,23 @@ router.post('/info', function (req, res) {
     console.log(req.session);
     console.log(req.body);
     let _body = req.body;
-
+    let _result = null;
     if (!_body.name) {
-        let _result = res_format.response_without_request({
-            cmd: "user/info"
-        });
-        res.json(_result);
+        _result = res_format.response_without_request({});
+    }
 
+    else if (!req.session.userId) {
+        _result = res_format.response_user_none({
+            msg: "请重新登录！"
+        });
+    }
+
+    //返回异常处理结果
+    if (_result) {
+        res.json(Object.assign(_result, {cmd: 'user/sign'}));
         return;
     }
+
     //sql
     user_service.info(req.session, function (data) {
         res.json(data);

@@ -25,3 +25,40 @@ exports.query = function (queryData, callback) {
     });
 };
 
+/**
+ * 查询
+ * @param params
+ * @param callback
+ */
+exports.select = function (params, callback) {
+    //"SELECT * FROM table WHERE a = ? and b = ?,
+    let post = [];
+    let queryArr = [];
+
+    for (let key in params.$where) {
+        post.push(params.$where[key]);
+        queryArr.push(key + ' = ?');
+    }
+    let _sql = {
+        sql: "SELECT * FROM " + params.$table + " WHERE " + queryArr.join(" AND ") || 1,
+        values: post
+    };
+
+    pool.query(_sql, callback);
+};
+/**
+ * insert
+ * @param params
+ * @param cb
+ */
+exports.insert = function (params, cb) {
+    console.log("===========base insert==================");
+    let _sql = {
+        sql: 'INSERT INTO ' + params.$table + ' SET ?',
+        values: params.$values
+    };
+    console.log(_sql);
+    pool.query(_sql, cb);
+
+};
+

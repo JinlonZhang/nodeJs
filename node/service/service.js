@@ -5,10 +5,7 @@
 "use strict";
 var md5 = require('md5');
 //mysql
-var user_pool = require("../mysql/mysql_pool_user");
-var userlogo_pool = require("../mysql/mysql_pool_userlogo");
-//util
-var res_format = require("../util/response_format");
+
 var util = require("../util/util");
 
 /**

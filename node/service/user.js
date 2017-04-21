@@ -6,9 +6,7 @@
 
 var md5 = require('md5');
 //mysql
-var pool_sql = require("../mysql/mysql_pool_sql");
 var user_pool = require("../mysql/mysql_pool_user");
-var userlogo_pool = require("../mysql/mysql_pool_userlogo");
 //util
 var res_format = require("../util/response_format");
 var util = require("../util/util");
@@ -23,7 +21,8 @@ exports.sign = function (params, callback) {
         password: md5(params.password),
         phone: params.phone
     };
-    pool_sql.insert_single_table('user', _params, function (err, data, fields) {
+    // 插入用户信息
+    user_pool.sign(_params, function (err, data, fields) {
         console.log("=============== service query callback ==========");
         console.log(data);
         let _result = null;
@@ -66,7 +65,7 @@ exports.login = function (params, callback) {
         name: params.name,
         password: md5(params.password)
     };
-    user_pool.query(_params, function (err, data, fields) {
+    user_pool.select(_params, function (err, data, fields) {
         console.log("=============== service login callback ==========");
         let _result = null;
         if (Array.isArray(data) && data.length) {
@@ -89,7 +88,7 @@ exports.info = function (params, callback) {
     let _params = {
         name: params.userId,
     };
-    user_pool.query(_params, function (err, data, fields) {
+    user_pool.info(_params, function (err, data, fields) {
         console.log(data);
         let _result = null;
         if (err) {
@@ -98,14 +97,20 @@ exports.info = function (params, callback) {
                 result: err
             })
         } else {
+            console.log(data);
             if (Array.isArray(data) && data.length) {
+                let _data = {
+                    path: util.absolutePath(data[0].path),
+                    name: data[0].name,
+                    phone: data[0].phone
+                };
                 _result = res_format.response_format({
-                    result: data
+                    result: _data
                 });
             } else {
                 _result = res_format.response_without_result({
-                    msg: "请重新登录！",
-                    result: {info: false}
+                    msg: "没有相关信息",
+                    result: []
                 });
             }
         }
@@ -120,8 +125,8 @@ exports.info = function (params, callback) {
  * @param callback
  */
 exports.logo = function (params, callback) {
-    console.log(params.body);
-    console.log(params.file);
+    // console.log(params.body);
+    // console.log(params.file);
     let _file = params.file;
     let _params = {
         username: params.body.userName,
@@ -130,9 +135,10 @@ exports.logo = function (params, callback) {
         filename: _file.filename,
         path: _file.path
     };
-    userlogo_pool.insert(_params, function (err, data, fields) {
+    user_pool.logo(_params, function (err, data, fields) {
         let _result = null;
         if (err) {
+            console.log(err);
             //数据库错误
             _result = res_format.response_sql_error({
                 result: {logo: false}
