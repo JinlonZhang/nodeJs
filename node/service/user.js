@@ -17,7 +17,7 @@ var util = require("../util/util");
  */
 exports.sign = function (params, callback) {
     let _params = {
-        name: params.name,
+        username: params.name,
         password: md5(params.password),
         phone: params.phone
     };
@@ -62,10 +62,10 @@ exports.sign = function (params, callback) {
  */
 exports.login = function (params, callback) {
     let _params = {
-        name: params.name,
+        username: params.name,
         password: md5(params.password)
     };
-    user_pool.select(_params, function (err, data, fields) {
+    user_pool.login(_params, function (err, data, fields) {
         console.log("=============== service login callback ==========");
         let _result = null;
         if (Array.isArray(data) && data.length) {
@@ -86,7 +86,7 @@ exports.info = function (params, callback) {
     console.log("========info params===========");
     console.log(params);
     let _params = {
-        name: params.userId,
+        username: params.userId,
     };
     user_pool.info(_params, function (err, data, fields) {
         console.log(data);
@@ -101,7 +101,7 @@ exports.info = function (params, callback) {
             if (Array.isArray(data) && data.length) {
                 let _data = {
                     path: util.absolutePath(data[0].path),
-                    name: data[0].name,
+                    name: data[0].username,
                     phone: data[0].phone
                 };
                 _result = res_format.response_format({

@@ -31,7 +31,7 @@ exports.query = function (queryData, callback) {
  * @param callback
  */
 exports.select = function (params, callback) {
-    //"SELECT * FROM table WHERE a = ? and b = ?,
+    console.log("===========base select==================");
     let post = [];
     let queryArr = [];
 
@@ -43,6 +43,8 @@ exports.select = function (params, callback) {
         sql: "SELECT * FROM " + params.$table + " WHERE " + queryArr.join(" AND ") || 1,
         values: post
     };
+
+    console.log(_sql);
 
     pool.query(_sql, callback);
 };

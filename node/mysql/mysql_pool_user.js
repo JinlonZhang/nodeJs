@@ -6,7 +6,7 @@ var pool = require("./mysql_pool");
 var pool_base = require("./mysql_pool_base");
 
 //常量配置
-const TABLE = 'user';
+const TABLE = 'userinfo';
 
 //继承父类的函数
 exports.select = pool_base.select;
@@ -82,8 +82,8 @@ exports.logo = function (params, cb) {
 exports.info = function (params, callback) {
     //select * from userlogo a ,`user` b  where a.username = b.`name` and b.`name` = '1qaz2wsx1' order by a.date desc limit 1 ;
     let sql = {
-        sql: "select * from userlogo a ,`user` b  where a.username = b.`name` and b.`name` = ? order by a.date desc limit 1",
-        values: [params.name]
+        sql: "select * from userlogo a ,`userinfo` b  where a.username = b.`username` and b.`username` = ? order by a.date desc limit 1",
+        values: [params.username]
     };
     pool.query(sql, function (error, results, fields) {
         if (error) {
