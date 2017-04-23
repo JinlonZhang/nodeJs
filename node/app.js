@@ -6,6 +6,7 @@
 var path = require('path');
 var express = require("express");
 var session = require('express-session');
+var helmet = require('helmet');
 var favicon = require('serve-favicon');
 var pug = require('pug');
 var config = require('config-lite');
@@ -17,19 +18,29 @@ const routes = require('./router/index');//require('./router');
 // var pkg = require('../package');
 //实例
 var app = express();
+
+
 //设置地址栏icon
 app.use(favicon(path.join(__dirname, './public', 'favicon/favicon.ico')));
+
 
 // 设置模板目录和模板引擎pug
 app.set('views', path.join(__dirname, 'view'));
 // 设置模板引擎为 ejs
 app.set('view engine', 'pug');
 
+
 // 设置静态文件目录
 app.use(config.publicPath, express.static(path.join(__dirname, './public')));
 // 前端 静态资源区 [更多配置 查看官方api]
 // app.use('/', express.static(path.join(__dirname, './webapp')，{maxAge: 1000}));
 app.use(express.static(path.join(__dirname, './webapp'), {maxAge: 1000}));
+
+
+// 建议使用 helmet 插件处理 header
+app.disable('x-powered-by');
+app.use(helmet());
+
 
 // session 中间件（暂时利用内存 临时 处理session）
 app.use(session({
@@ -45,13 +56,13 @@ app.use(session({
     // })
 }));
 
+
 // 设置模板全局常量
 app.locals.blog = {
     title: "node-express",
     description: "1104"
 };
-// 建议使用 helmet 插件处理 header
-app.disable('x-powered-by');
+
 
 // bodyParser ：ajax 请求的配置项
 // app.use(bodyParser.json({
@@ -61,8 +72,10 @@ app.disable('x-powered-by');
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({extended: false})); // for parsing application/x-www-form-urlencoded
 
+
 // 路由
 routes(app);
+
 
 //错误处理
 app.use(function (err, req, res, next) {
@@ -75,6 +88,7 @@ app.use(function (err, req, res, next) {
     res.status(500);
     res.render('error', {error: err});
 });
+
 
 // 监听端口，启动程序
 const SERVER = app.listen(config.port, function () {
