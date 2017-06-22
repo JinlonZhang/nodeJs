@@ -17,7 +17,7 @@ exports.verifycode = function (params, callback) {
     //生成 code
     let _code = Math.random().toFixed(5).replace(/^0\./, '');
 
-    callback(_code);
+    callback && callback(_code);
 };
 
 
