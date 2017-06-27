@@ -11,6 +11,10 @@ var favicon = require('serve-favicon');
 var pug = require('pug');
 var config = require('config-lite');
 var bodyParser = require('body-parser');
+var winston = require('winston');
+var expressWinston = require('express-winston');
+require('winston-daily-rotate-file');
+
 // 路由
 const routes = require('./router/index');//require('./router');
 
@@ -72,10 +76,56 @@ app.locals.blog = {
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({extended: false})); // for parsing application/x-www-form-urlencoded
 
+// expressWinston.requestWhitelist.push('body');
+// expressWinston.responseWhitelist.push('body');
+app.use(expressWinston.logger({
+    transports: [
+        new winston.transports.Console({
+            json: true,//json格式
+            silent: true,//控制台不输出
+            colorize: true
+        }),
+        new winston.transports.File({
+            filename: 'log/success.log',
+            timestamp: function () {
+                return new Date().toString();
+            },
+            maxsize: 1024 * 1024//文件大小1K
+        }),
+        new winston.transports.DailyRotateFile({
+            dirname: './log',//文件夹路径
+            filename: './logs',//文件后缀
+            datePattern: 'yyyy-MM-dd-HH-mm.',//文件前缀（.要自己加上）
+            prepend: true,
+            level: process.env.ENV === 'development' ? 'debug' : 'info'
+        })
+    ],
+    requestWhitelist: ["body", "session"], // Array of request properties to log. Overrides global requestWhitelist for this instance
+    responseWhitelist: ["body"], // Array of response properties to log. Overrides global responseWhitelist for this instance
+    meta: true, // optional: control whether you want to log the meta data about the request (default to true)
+    msg: "HTTP {{req.method}} {{req.url}}", // optional: customize the default logging message. E.g. "{{res.statusCode}} {{req.method}} {{res.responseTime}}ms {{req.url}}"
+    expressFormat: true, // Use the default Express/morgan request formatting. Enabling this will override any msg if true. Will only output colors with colorize set to true
+    colorize: true, // Color the text and status code, using the Express/morgan color palette (text: gray, status: default green, 3XX cyan, 4XX yellow, 5XX red).
+    ignoreRoute: function (req, res) {
+        return false;
+    } // optional: allows to skip some log messages based on request and/or response
+}));
 
 // 路由
 routes(app);
 
+// 错误请求的日志
+app.use(expressWinston.errorLogger({
+    transports: [
+        new winston.transports.Console({
+            json: true,
+            colorize: true
+        }),
+        new winston.transports.File({
+            filename: 'log/error.log'
+        })
+    ]
+}));
 
 //错误处理
 app.use(function (err, req, res, next) {
