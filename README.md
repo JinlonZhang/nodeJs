@@ -23,4 +23,5 @@
 - 跨域 配置
 - 跨后台处理 【处理】 done
 - 异步解决方案[同步写法处理]  done
-- 图片上传 （用户头像等）
+- 图片上传 （用户头像等）done
+- 日志处理 winston express-winston done
