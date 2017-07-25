@@ -37,8 +37,11 @@ app.set('view engine', 'pug');
 // 设置静态文件目录
 app.use(config.publicPath, express.static(path.join(__dirname, './public')));
 // 前端 静态资源区 [更多配置 查看官方api]
-// app.use('/', express.static(path.join(__dirname, './webapp')，{maxAge: 1000}));
-app.use(express.static(path.join(__dirname, './webapp'), {maxAge: 1000}));
+app.use('/webapp', express.static(path.join(__dirname, './webapp'),{maxAge: 1000}));
+// app.use('/', express.static(path.join(__dirname, './build/react-dev'), {
+//     maxAge: 1000,
+//     index: ['index.html', 'app.html']
+// }));
 
 
 // 建议使用 helmet 插件处理 header
