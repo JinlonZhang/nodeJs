@@ -1,0 +1,72 @@
+/**
+ * Created by xiaogang on 2016/12/12.
+ */
+@import "../less/common";
+@import "../less/iconfont/iconfont.css";
+@import "../less/common/mixins";
+//基于 less 中 common 样式新增css demo的common样式
+
+body {
+  background-color: @default-bgColor;
+  font-size: @default-fSize;
+}
+
+.up-header {
+  .up-header();
+}
+
+.up-list {
+  .up-list();
+  margin-bottom: 0.2rem;
+}
+
+.up-ellipsis {
+  .up-ellipsis();
+}
+
+.up-ellipsis3 {
+  .up-ellipsis(3);
+}
+
+.up-input {
+  .up-input();
+}
+
+.up-button {
+  .up-button();
+}
+
+.up-checkbox {
+  .up-checkbox();
+}
+
+.up-textarea {
+  .up-textarea();
+}
+
+.up-switch {
+  .up-switch();
+}
+
+@import "../less/common/component/address";
+.up-address {
+  .up-address();
+}
+
+@import "../less/common/component/counponCard";
+@import "../less/common/component/bank";
+
+.up-couponCard {
+ // .up-couponCard('../../less/img/coupon/coupon.png');
+}
+
+.up-bankLogo {
+ // .up-bankLogo('../../less/img/bank/banks.png');
+}
+
+//remove if you do not use iconfont
+.iconfont {
+  font-size: inherit;
+}
+
+

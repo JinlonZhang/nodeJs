@@ -38,6 +38,7 @@ app.set('view engine', 'pug');
 app.use(config.publicPath, express.static(path.join(__dirname, './public')));
 // 前端 静态资源区 [更多配置 查看官方api]
 app.use('/webapp', express.static(path.join(__dirname, './webapp'),{maxAge: 1000}));
+app.use('/developer', express.static(path.join(__dirname, '../src'),{maxAge: 1000}));
 // app.use('/', express.static(path.join(__dirname, './build/react-dev'), {
 //     maxAge: 1000,
 //     index: ['index.html', 'app.html']

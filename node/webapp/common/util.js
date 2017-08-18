@@ -440,6 +440,9 @@ window.personal = window.personal || {};
             dataType: params.dataType || "json",//默认json返回
             contentType: "application/json",//必须给json 或者可以转换成json格式的字符串数据
             data: params.type == "get" ? params.data : JSON.stringify(params.data || {}),
+            beforeSend: function (XMLHttp) {
+                XMLHttp.setRequestHeader("name", "yazhou")
+            },
             success: function (data) {
                 // _this.ui && _this.ui.hideLoading();
                 if (data && data.code == 10000) {
@@ -511,7 +514,7 @@ window.personal = window.personal || {};
         console.log(url);
         //2016-9-26 新增webp的图片格式判断
         params.data = params.data || {};
-        params.data.append("webp",this.supportWebp);
+        params.data.append("webp", this.supportWebp);
         console.log(params);
         var _params = {
             type: "post",//默认post请求
