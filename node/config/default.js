@@ -1,6 +1,6 @@
 module.exports = {
-    port: 3000,
-    origin: "http://127.0.0.1:3000",
+    port: 1104,
+    origin: "http://127.0.0.1:1104",
     publicPath: '/1104',//后台静态资源存储区
     session: {
         secret: 'zling',//加密串

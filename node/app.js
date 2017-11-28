@@ -25,7 +25,7 @@ var app = express();
 
 
 //设置地址栏icon
-app.use(favicon(path.join(__dirname, './public', 'favicon/favicon.ico')));
+app.use(favicon(path.join(__dirname, './public', 'favicon/favi.ico')));
 
 
 // 设置模板目录和模板引擎pug
